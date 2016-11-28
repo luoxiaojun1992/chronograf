@@ -39,7 +39,7 @@ export default React.createClass({
     }
   },
   render() {
-    const {fields, timeSeries} = this._timeSeries;
+    const {fields, timeSeries, dygraphSeries} = this._timeSeries;
 
     // If data for this graph is being fetched for the first time, show a graph-wide spinner.
     if (this.props.isFetchingInitially) {
@@ -67,7 +67,15 @@ export default React.createClass({
     return (
       <div>
         {this.props.isRefreshing ? <h3 className="graph-panel__spinner--small" /> : null}
-        <Dygraph containerStyle={{width: '100%', height: '300px'}} overrideLineColors={this.props.overrideLineColors} isGraphFilled={this.props.isGraphFilled} timeSeries={timeSeries} fields={fields} options={options} />
+        <Dygraph
+          containerStyle={{width: '100%', height: '300px'}}
+          overrideLineColors={this.props.overrideLineColors}
+          isGraphFilled={this.props.isGraphFilled}
+          timeSeries={timeSeries}
+          fields={fields}
+          options={options}
+          dygraphSeries={dygraphSeries}
+        />
       </div>
     );
   },
