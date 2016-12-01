@@ -22,6 +22,11 @@ func TestTrigger(t *testing.T) {
     |deadman(threshold, period)
         .stateChangesOnly()
         .message(message)
+				.details('''
+<h1><span style="color: {{ if eq .Level "OK" }}green{{ else }}red{{ end }};">●</span>{{ .ID }}</h1>
+<b>{{ .Message }}</b>
+监控值: {{ .Fields }}
+''')
         .id(idVar)
         .idTag(idTag)
         .levelTag(levelTag)
@@ -54,6 +59,11 @@ var trigger = past
         .crit(lambda: "value" > crit)
         .stateChangesOnly()
         .message(message)
+				.details('''
+<h1><span style="color: {{ if eq .Level "OK" }}green{{ else }}red{{ end }};">●</span>{{ .ID }}</h1>
+<b>{{ .Message }}</b>
+监控值: {{ .Fields }}
+''')
         .id(idVar)
         .idTag(idTag)
         .levelTag(levelTag)
@@ -86,6 +96,11 @@ var trigger = past
         .crit(lambda: "value" > crit)
         .stateChangesOnly()
         .message(message)
+				.details('''
+<h1><span style="color: {{ if eq .Level "OK" }}green{{ else }}red{{ end }};">●</span>{{ .ID }}</h1>
+<b>{{ .Message }}</b>
+监控值: {{ .Fields }}
+''')
         .id(idVar)
         .idTag(idTag)
         .levelTag(levelTag)
@@ -107,6 +122,11 @@ var trigger = past
         .crit(lambda: "value" > crit)
         .stateChangesOnly()
         .message(message)
+				.details('''
+<h1><span style="color: {{ if eq .Level "OK" }}green{{ else }}red{{ end }};">●</span>{{ .ID }}</h1>
+<b>{{ .Message }}</b>
+监控值: {{ .Fields }}
+''')
         .id(idVar)
         .idTag(idTag)
         .levelTag(levelTag)

@@ -20,6 +20,11 @@ const (
 var AllAlerts = `
     .stateChangesOnly()
     .message(message)
+		.details('''
+<h1><span style="color: {{ if eq .Level "OK" }}green{{ else }}red{{ end }};">●</span>{{ .ID }}</h1>
+<b>{{ .Message }}</b>
+监控值: {{ .Fields }}
+''')
 	.id(idVar)
 	.idTag(idTag)
 	.levelTag(levelTag)
