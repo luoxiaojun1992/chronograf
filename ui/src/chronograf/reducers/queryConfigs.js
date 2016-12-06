@@ -9,6 +9,7 @@ import {
   toggleField,
   toggleTagAcceptance,
   updateRawQuery,
+  setEvery,
 } from 'src/utils/queryTransitions';
 import update from 'react-addons-update';
 
@@ -68,6 +69,15 @@ export default function queryConfigs(state = {}, action) {
     case 'GROUP_BY_TIME': {
       const {queryId, time} = action.payload;
       const nextQueryConfig = groupByTime(state[queryId], time);
+
+      return Object.assign({}, state, {
+        [queryId]: nextQueryConfig,
+      });
+    }
+
+    case 'SET_EVERY': {
+      const {queryId, time} = action.payload;
+      const nextQueryConfig = setEvery(state[queryId], time);
 
       return Object.assign({}, state, {
         [queryId]: nextQueryConfig,

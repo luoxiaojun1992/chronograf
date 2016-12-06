@@ -117,7 +117,7 @@ func window(rule chronograf.AlertRule) string {
 	// Period only makes sense if the field has a been grouped via a time duration.
 	for _, field := range rule.Query.Fields {
 		if len(field.Funcs) > 0 {
-			return fmt.Sprintf("var period = %s\nvar every = %s", rule.Query.GroupBy.Time, rule.Every)
+			return fmt.Sprintf("var period = %s\nvar every = %s", rule.Query.GroupBy.Time, rule.Query.Every)
 		}
 	}
 	return ""

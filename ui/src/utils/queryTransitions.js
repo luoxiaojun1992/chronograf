@@ -137,3 +137,7 @@ export function chooseTag(query, tag) {
     });
   }
 }
+
+export function setEvery(query, everyTime) {
+  return Object.assign({}, query, {every: everyTime});
+}

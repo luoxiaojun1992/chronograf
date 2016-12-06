@@ -12,6 +12,9 @@ const DB_TAB = 'databases';
 const MEASUREMENTS_TAB = 'measurments';
 const FIELDS_TAB = 'fields';
 const TAGS_TAB = 'tags';
+const EVERY_TAB = 'every';
+
+const DEFAULT_EVERY_TIME = '1m';
 
 export const DataSection = React.createClass({
   propTypes: {
@@ -33,6 +36,7 @@ export const DataSection = React.createClass({
       toggleField: PropTypes.func.isRequired,
       groupByTime: PropTypes.func.isRequired,
       toggleTagAcceptance: PropTypes.func.isRequired,
+      setEvery: PropTypes.func.isRequired,
     }).isRequired,
   },
 
@@ -52,6 +56,7 @@ export const DataSection = React.createClass({
   getInitialState() {
     return {
       activeTab: DB_TAB,
+      every: DEFAULT_EVERY_TIME,
     };
   },
 
@@ -95,6 +100,11 @@ export const DataSection = React.createClass({
     this.setState({activeTab: tab});
   },
 
+  handleInputEvery(e) {
+    this.props.actions.setEvery(this.props.query.id, e.target.value);
+    this.setState({every: e.target.value});
+  },
+
   render() {
     const {query} = this.props;
     const timeRange = {lower: 'now() - 15m', upper: null};
@@ -136,6 +146,7 @@ export const DataSection = React.createClass({
           <div onClick={_.wrap(MEASUREMENTS_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === MEASUREMENTS_TAB})}>Measurements</div>
           <div onClick={_.wrap(FIELDS_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === FIELDS_TAB})}>Fields</div>
           <div onClick={_.wrap(TAGS_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === TAGS_TAB})}>Tags</div>
+          <div onClick={_.wrap(EVERY_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === EVERY_TAB})}>Every</div>
         </div>
         {this.renderList()}
       </div>
@@ -178,6 +189,19 @@ export const DataSection = React.createClass({
             onGroupByTag={this.handleGroupByTag}
             onToggleTagAcceptance={this.handleToggleTagAcceptance}
           />
+        );
+      case EVERY_TAB:
+        return (
+          <div>
+            <div className="query-editor__list-header">
+              <input
+                className="form-control input-sm size-166"
+                type="text"
+                value={this.state.every}
+                onChange={this.handleInputEvery}
+              />
+            </div>
+          </div>
         );
       default:
         return <ul className="query-editor__list"></ul>;

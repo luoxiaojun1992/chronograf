@@ -160,6 +160,7 @@ type QueryConfig struct {
 	GroupBy         GroupBy             `json:"groupBy"`
 	AreTagsAccepted bool                `json:"areTagsAccepted"`
 	RawText         string              `json:"rawText,omitempty"`
+	Every						string              `json:"every"`
 }
 
 // Server represents a proxy connection to an HTTP server

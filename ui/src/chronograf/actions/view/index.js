@@ -77,6 +77,16 @@ export function groupByTime(queryId, time) {
   };
 }
 
+export function setEvery(queryId, time) {
+  return {
+    type: 'SET_EVERY',
+    payload: {
+      queryId,
+      time,
+    },
+  };
+}
+
 export function applyFuncsToField(queryId, fieldFunc) {
   return {
     type: 'APPLY_FUNCS_TO_FIELD',

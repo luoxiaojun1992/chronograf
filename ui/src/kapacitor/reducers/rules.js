@@ -13,7 +13,7 @@ export default function rules(state = {}, action) {
           values: defaultRuleConfigs.threshold,
           message: '',
           alerts: [],
-          every: '30s',
+          every: '1m',
           name: 'Untitled Rule',
         },
       });
