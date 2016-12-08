@@ -25,6 +25,7 @@ export const DataSection = React.createClass({
     }),
     query: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      every: PropTypes.string.isRequired,
     }).isRequired,
     addFlashMessage: PropTypes.func,
     actions: PropTypes.shape({
@@ -56,7 +57,7 @@ export const DataSection = React.createClass({
   getInitialState() {
     return {
       activeTab: DB_TAB,
-      every: DEFAULT_EVERY_TIME,
+      every: this.props.query.every ? this.props.query.every : DEFAULT_EVERY_TIME,
     };
   },
 
