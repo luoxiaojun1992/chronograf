@@ -36,7 +36,7 @@ var AllAlerts = `
 var ThresholdTrigger = `
   var trigger = data
   |alert()
-    .crit(lambda: "value" %s crit)
+    .crit(lambda: "value" %s crit %s)
 `
 
 // RelativeAbsoluteTrigger compares one window of data versus another (current - past)
@@ -53,7 +53,7 @@ var trigger = past
 		.keep()
 		.as('value')
     |alert()
-        .crit(lambda: "value" %s crit)
+        .crit(lambda: "value" %s crit %s)
 `
 
 // RelativePercentTrigger compares one window of data versus another as a percent change.
@@ -70,7 +70,7 @@ var trigger = past
 		.keep()
 		.as('value')
     |alert()
-        .crit(lambda: "value" %s crit)
+        .crit(lambda: "value" %s crit %s)
 `
 
 // DeadmanTrigger checks if any data has been streamed in the last period of time
@@ -80,6 +80,9 @@ var DeadmanTrigger = `
 
 // Trigger returns the trigger mechanism for a tickscript
 func Trigger(rule chronograf.AlertRule) (string, error) {
+	rule.Query.DateRangeFrom = "8"
+	rule.Query.DateRangeTo = "20"
+
 	var trigger string
 	var err error
 	switch rule.Trigger {
@@ -106,9 +109,9 @@ func relativeTrigger(rule chronograf.AlertRule) (string, error) {
 		return "", err
 	}
 	if rule.TriggerValues.Change == ChangePercent {
-		return fmt.Sprintf(RelativePercentTrigger, op), nil
+		return fmt.Sprintf(RelativePercentTrigger, op, "AND hour(\"time\") >= " + rule.Query.DateRangeFrom + " AND hour(\"time\") <= " + rule.Query.DateRangeTo), nil
 	} else if rule.TriggerValues.Change == ChangeAmount {
-		return fmt.Sprintf(RelativeAbsoluteTrigger, op), nil
+		return fmt.Sprintf(RelativeAbsoluteTrigger, op, "AND hour(\"time\") >= " + rule.Query.DateRangeFrom + " AND hour(\"time\") <= " + rule.Query.DateRangeTo), nil
 	} else {
 		return "", fmt.Errorf("Unknown change type %s", rule.TriggerValues.Change)
 	}
@@ -119,5 +122,5 @@ func thresholdTrigger(rule chronograf.AlertRule) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf(ThresholdTrigger, op), nil
+	return fmt.Sprintf(ThresholdTrigger, op, "AND hour(\"time\") >= " + rule.Query.DateRangeFrom + " AND hour(\"time\") <= " + rule.Query.DateRangeTo), nil
 }

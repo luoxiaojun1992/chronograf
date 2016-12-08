@@ -141,3 +141,11 @@ export function chooseTag(query, tag) {
 export function setEvery(query, everyTime) {
   return Object.assign({}, query, {every: everyTime});
 }
+
+export function setDateRangeFrom(query, dateRangeFrom) {
+  return Object.assign({}, query, {date_range_from: dateRangeFrom});
+}
+
+export function setDateRangeTo(query, dateRangeTo) {
+  return Object.assign({}, query, {date_range_to: dateRangeTo});
+}

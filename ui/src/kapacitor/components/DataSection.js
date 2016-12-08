@@ -13,8 +13,11 @@ const MEASUREMENTS_TAB = 'measurments';
 const FIELDS_TAB = 'fields';
 const TAGS_TAB = 'tags';
 const EVERY_TAB = 'every';
+const DATE_RANGE_TAB = 'date_range';
 
 const DEFAULT_EVERY_TIME = '1m';
+const DEFAULT_DATE_RANGE_FROM = '8';
+const DEFAULT_DATE_RANGE_TO = '20';
 
 export const DataSection = React.createClass({
   propTypes: {
@@ -26,6 +29,8 @@ export const DataSection = React.createClass({
     query: PropTypes.shape({
       id: PropTypes.string.isRequired,
       every: PropTypes.string.isRequired,
+      date_range_from: PropTypes.string.isRequired,
+      date_range_to: PropTypes.string.isRequired,
     }).isRequired,
     addFlashMessage: PropTypes.func,
     actions: PropTypes.shape({
@@ -38,6 +43,8 @@ export const DataSection = React.createClass({
       groupByTime: PropTypes.func.isRequired,
       toggleTagAcceptance: PropTypes.func.isRequired,
       setEvery: PropTypes.func.isRequired,
+      setDateRangeFrom: PropTypes.func.isRequired,
+      setDateRangeTo: PropTypes.func.isRequired,
     }).isRequired,
   },
 
@@ -58,6 +65,8 @@ export const DataSection = React.createClass({
     return {
       activeTab: DB_TAB,
       every: this.props.query.every ? this.props.query.every : DEFAULT_EVERY_TIME,
+      date_range_from: this.props.query.date_range_from ? this.props.query.date_range_from : DEFAULT_DATE_RANGE_FROM,
+      date_range_to: this.props.query.date_range_to ? this.props.query.date_range_to : DEFAULT_DATE_RANGE_TO,
     };
   },
 
@@ -106,6 +115,16 @@ export const DataSection = React.createClass({
     this.setState({every: e.target.value});
   },
 
+  handleInputDateRangeFrom(e) {
+    this.props.actions.setDateRangeFrom(this.props.query.id, e.target.value);
+    this.setState({date_range_from: e.target.value});
+  },
+
+  handleInputDateRangeTo(e) {
+    this.props.actions.setDateRangeTo(this.props.query.id, e.target.value);
+    this.setState({date_range_to: e.target.value});
+  },
+
   render() {
     const {query} = this.props;
     const timeRange = {lower: 'now() - 15m', upper: null};
@@ -148,6 +167,7 @@ export const DataSection = React.createClass({
           <div onClick={_.wrap(FIELDS_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === FIELDS_TAB})}>Fields</div>
           <div onClick={_.wrap(TAGS_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === TAGS_TAB})}>Tags</div>
           <div onClick={_.wrap(EVERY_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === EVERY_TAB})}>Every</div>
+          <div onClick={_.wrap(DATE_RANGE_TAB, this.handleClickTab)} className={classNames("query-editor__tab", {active: activeTab === DATE_RANGE_TAB})}>Hour Range</div>
         </div>
         {this.renderList()}
       </div>
@@ -200,6 +220,26 @@ export const DataSection = React.createClass({
                 type="text"
                 value={this.state.every}
                 onChange={this.handleInputEvery}
+              />
+            </div>
+          </div>
+        );
+      case DATE_RANGE_TAB:
+        return (
+          <div>
+            <div className="query-editor__list-header">
+              <input
+                className="form-control input-sm size-166"
+                type="text"
+                value={this.state.date_range_from}
+                onChange={this.handleInputDateRangeFrom}
+              />
+              -
+              <input
+                className="form-control input-sm size-166"
+                type="text"
+                value={this.state.date_range_to}
+                onChange={this.handleInputDateRangeTo}
               />
             </div>
           </div>

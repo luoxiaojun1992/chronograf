@@ -87,6 +87,26 @@ export function setEvery(queryId, time) {
   };
 }
 
+export function setDateRangeFrom(queryId, dateRangeFrom) {
+  return {
+    type: 'SET_DATE_RANGE_FROM',
+    payload: {
+      queryId,
+      dateRangeFrom,
+    },
+  };
+}
+
+export function setDateRangeTo(queryId, dateRangeTo) {
+  return {
+    type: 'SET_DATE_RANGE_TO',
+    payload: {
+      queryId,
+      dateRangeTo,
+    },
+  };
+}
+
 export function applyFuncsToField(queryId, fieldFunc) {
   return {
     type: 'APPLY_FUNCS_TO_FIELD',

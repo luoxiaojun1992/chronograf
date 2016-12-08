@@ -13,5 +13,7 @@ export default function defaultQueryConfig(id) {
     areTagsAccepted: true,
     rawText: null,
     every: "1m",
+    date_range_from: "8",
+    date_range_to: "20",
   };
 }

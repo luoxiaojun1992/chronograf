@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import Dropdown from 'shared/components/Dropdown';
 import ReactTooltip from 'react-tooltip';
 
+const DEFAULT_RULE_MESSAGE = '报警规则:{{ .ID }},报警级别:{{ .Level }},Pool:{{ index .Tags "pool" }}';
+
 export const RuleMessage = React.createClass({
   propTypes: {
     rule: PropTypes.shape({}).isRequired,
@@ -36,8 +38,8 @@ export const RuleMessage = React.createClass({
             ref={(r) => this.message = r}
             onChange={() => actions.updateMessage(rule.id, this.message.value)}
             placeholder="Compose your alert message here"
-            value={rule.message}
-          />
+            value={rule.message ? rule.message : DEFAULT_RULE_MESSAGE}
+          >{DEFAULT_RULE_MESSAGE}</textarea>
           <div className="alert-message--formatting">
             <p>Templates:</p>
             <code data-tip="The ID of the alert">&#123;&#123;.ID&#125;&#125;</code>

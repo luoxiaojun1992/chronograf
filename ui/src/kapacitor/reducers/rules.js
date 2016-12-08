@@ -11,7 +11,7 @@ export default function rules(state = {}, action) {
           queryID,
           trigger: 'threshold',
           values: defaultRuleConfigs.threshold,
-          message: '',
+          message: '报警规则:{{ .ID }},报警级别:{{ .Level }},Pool:{{ index .Tags "pool" }}',
           alerts: [],
           every: '1m',
           name: 'Untitled Rule',

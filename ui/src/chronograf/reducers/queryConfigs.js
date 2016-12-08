@@ -10,6 +10,8 @@ import {
   toggleTagAcceptance,
   updateRawQuery,
   setEvery,
+  setDateRangeFrom,
+  setDateRangeTo,
 } from 'src/utils/queryTransitions';
 import update from 'react-addons-update';
 
@@ -78,6 +80,24 @@ export default function queryConfigs(state = {}, action) {
     case 'SET_EVERY': {
       const {queryId, time} = action.payload;
       const nextQueryConfig = setEvery(state[queryId], time);
+
+      return Object.assign({}, state, {
+        [queryId]: nextQueryConfig,
+      });
+    }
+
+    case 'SET_DATE_RANGE_FROM': {
+      const {queryId, dateRangeFrom} = action.payload;
+      const nextQueryConfig = setDateRangeFrom(state[queryId], dateRangeFrom);
+
+      return Object.assign({}, state, {
+        [queryId]: nextQueryConfig,
+      });
+    }
+
+    case 'SET_DATE_RANGE_TO': {
+      const {queryId, dateRangeTo} = action.payload;
+      const nextQueryConfig = setDateRangeTo(state[queryId], dateRangeTo);
 
       return Object.assign({}, state, {
         [queryId]: nextQueryConfig,

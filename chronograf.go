@@ -161,6 +161,8 @@ type QueryConfig struct {
 	AreTagsAccepted bool                `json:"areTagsAccepted"`
 	RawText         string              `json:"rawText,omitempty"`
 	Every						string              `json:"every"`
+	DateRangeFrom   string              `json:"date_range_from"`
+	DateRangeTo     string              `json:"date_range_to"`
 }
 
 // Server represents a proxy connection to an HTTP server
