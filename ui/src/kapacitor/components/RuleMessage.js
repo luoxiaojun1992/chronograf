@@ -3,14 +3,24 @@ import Dropdown from 'shared/components/Dropdown';
 import ReactTooltip from 'react-tooltip';
 
 const DEFAULT_RULE_MESSAGE = '报警规则:{{ .ID }},报警级别:{{ .Level }},Pool:{{ index .Tags "pool" }}';
+const DEFAULT_POST_URL = 'https://alerthandler.example.com';
 
 export const RuleMessage = React.createClass({
   propTypes: {
-    rule: PropTypes.shape({}).isRequired,
+    rule: PropTypes.shape({
+      postUrl: PropTypes.string.isRequired,
+    }).isRequired,
     actions: PropTypes.shape({
       updateMessage: PropTypes.func.isRequired,
+      updatePostUrl: PropTypes.func.isRequired,
     }).isRequired,
     enabledAlerts: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  },
+
+  getInitialState() {
+    return {
+      post_url: this.props.rule.postUrl ? this.props.rule.postUrl : DEFAULT_POST_URL,
+    };
   },
 
   handleChangeMessage() {
@@ -21,6 +31,12 @@ export const RuleMessage = React.createClass({
   handleChooseAlert(item) {
     const {actions} = this.props;
     actions.updateAlerts(item.ruleID, [item.text]);
+  },
+
+  handleChangePostUrl(e) {
+    const {actions, rule} = this.props;
+    actions.updatePostUrl(rule.id, e.target.value);
+    this.setState({post_url: e.target.value});
   },
 
   render() {
@@ -55,6 +71,13 @@ export const RuleMessage = React.createClass({
           <div className="rule-section--item bottom alert-message--endpoint">
             <p>Send this Alert to:</p>
             <Dropdown className="size-256" selected={rule.alerts[0] || 'Choose an output'} items={alerts} onChoose={this.handleChooseAlert} />
+            <p>Post to:</p>
+            <input
+              type="text"
+              className="form-control input-sm size-166"
+              onChange={this.handleChangePostUrl}
+              value={this.state.post_url}
+            />
           </div>
         </div>
       </div>

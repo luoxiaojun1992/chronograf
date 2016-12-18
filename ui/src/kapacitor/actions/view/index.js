@@ -87,6 +87,16 @@ export function updateMessage(ruleID, message) {
   };
 }
 
+export function updatePostUrl(ruleID, postUrl) {
+  return {
+    type: 'UPDATE_POST_URL',
+    payload: {
+      ruleID,
+      postUrl,
+    },
+  };
+}
+
 export function updateAlerts(ruleID, alerts) {
   return {
     type: 'UPDATE_RULE_ALERTS',

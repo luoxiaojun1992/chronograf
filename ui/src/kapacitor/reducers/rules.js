@@ -62,6 +62,15 @@ export default function rules(state = {}, action) {
       });
     }
 
+    case 'UPDATE_POST_URL': {
+      const {ruleID, postUrl} = action.payload;
+      return Object.assign({}, state, {
+        [ruleID]: Object.assign({}, state[ruleID], {
+          postUrl,
+        }),
+      });
+    }
+
     case 'UPDATE_RULE_ALERTS': {
       const {ruleID, alerts} = action.payload;
       return Object.assign({}, state, {

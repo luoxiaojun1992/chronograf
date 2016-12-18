@@ -103,6 +103,7 @@ type AlertRule struct {
 	Trigger       string        `json:"trigger"`      // Trigger is a type that defines when to trigger the alert
 	TriggerValues TriggerValues `json:"values"`       // Defines the values that cause the alert to trigger
 	Name          string        `json:"name"`         // Name is the user-defined name for the alert
+	PostUrl       string        `json:"postUrl"`     // Url to post.
 }
 
 // AlertRulesStore stores rules for building tickscript alerting tasks

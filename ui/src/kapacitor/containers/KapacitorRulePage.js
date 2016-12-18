@@ -26,6 +26,7 @@ export const KapacitorRulePage = React.createClass({
       chooseTrigger: PropTypes.func.isRequired,
       updateRuleValues: PropTypes.func.isRequired,
       updateMessage: PropTypes.func.isRequired,
+      updatePostUrl: PropTypes.func.isRequired,
       updateAlerts: PropTypes.func.isRequired,
       updateRuleName: PropTypes.func.isRequired,
     }).isRequired,

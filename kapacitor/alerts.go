@@ -37,6 +37,8 @@ func AlertServices(rule chronograf.AlertRule) (string, error) {
 			return "", err
 		}
 		alert = alert + fmt.Sprintf(".%s()", srv)
+		// rule.PostUrl = "https://alerthandler.example.com"
+		alert = alert + fmt.Sprintf(".post('" + rule.PostUrl + "')")
 	}
 	return alert, nil
 }
